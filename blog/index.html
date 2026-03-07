@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caracal - Blog</title>
+    <meta name="description" content="Development notes and updates from the Caracal project." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Caracal" />
+    <meta property="og:title" content="Caracal - Blog" />
+    <meta property="og:description" content="Development notes and updates from the Caracal project." />
+    <meta property="og:url" content="https://caracal-lang.org/blog/" />
+    <meta property="og:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+    <meta property="og:image:alt" content="Caracal social preview image" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Caracal - Blog" />
+    <meta name="twitter:description" content="Development notes and updates from the Caracal project." />
+    <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+    <link rel="canonical" href="https://caracal-lang.org/blog/" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+    <script src="../preload-theme.js"></script>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="blog-page">
+<div class="top-nav">
+    <div class="top-nav-left">
+        <a class="top-nav-logo top-nav-logo-link" href="../" aria-label="Go to home page">
+            <img src="../assets/caracal.svg" alt="Caracal Logo" class="top-nav-logo-image" />
+            <span class="top-nav-logo-text">Caracal</span>
+        </a>
+        <div class="top-nav-content">
+            <a href="../" class="top-nav-link">Home</a>
+            <a href="../docs/" class="top-nav-link">Docs</a>
+            <a href="../blog/" class="top-nav-link active">Blog</a>
+        </div>
+    </div>
+    <a class="top-nav-link github-link" href="https://github.com/arminherling/Caracal" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+        <img src="../assets/github-logo.png" alt="GitHub" />
+        <span>Repo</span>
+    </a>
+    <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+        <span class="icon" id="themeIcon">&#9788;</span>
+        <span id="themeLabel">Light</span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</div>
+<div class="nav-overlay" id="navOverlay"></div>
+<nav id="nav">
+    <ul>
+        <li class="mobile-only-link"><a href="../">Home</a></li>
+        <li class="mobile-only-link"><a href="../docs/">Docs</a></li>
+        <div class="section-title">Posts</div>
+        <li id="blogPostNavLoading"><span class="post-toc-empty">Loading posts...</span></li>
+        <li id="blogPostNav"></li>
+    </ul>
+</nav>
+<main class="blog-main">
+    <h1>Caracal Blog</h1>
+    <p class="intro-subtitle">Devlogs, notes and other stuff.</p>
+    <section id="blogList" class="blog-list">
+        <p>Loading posts...</p>
+    </section>
+</main>
+<script src="../theme.js"></script>
+<script src="../blog.js"></script>
+</body>
+</html>

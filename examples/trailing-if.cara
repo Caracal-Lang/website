@@ -1,0 +1,14 @@
+def process(x: i32) i32
+{
+    return 0 if x < 0;
+
+    i := 0;
+    while true
+    {
+        i = i + 1;
+        skip if i < 3;
+        break if i >= x;
+    }
+
+    return i;
+}

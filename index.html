@@ -1,12 +1,113 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Caracal Lang — Test Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caracal - Home</title>
+  <meta name="description" content="Caracal is an imperative compiled language focused on simple syntax and sensible defaults." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Caracal" />
+  <meta property="og:title" content="Caracal - Home" />
+  <meta property="og:description" content="Caracal is an imperative compiled language focused on simple syntax and sensible defaults." />
+  <meta property="og:url" content="https://caracal-lang.org/" />
+  <meta property="og:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+  <meta property="og:image:alt" content="Caracal social preview image" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Caracal - Home" />
+  <meta name="twitter:description" content="Caracal is an imperative compiled language focused on simple syntax and sensible defaults." />
+  <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+  <link rel="canonical" href="https://caracal-lang.org/" />
+  <meta property="og:image:alt" content="Caracal social preview image" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Caracal - Home" />
+  <meta name="twitter:description" content="Caracal is an imperative compiled language focused on simple syntax and sensible defaults." />
+  <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+  <link rel="canonical" href="https://caracal-lang.org/" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <script src="preload-theme.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <h1>Caracal Lang — Test Page</h1>
-  <p>This is a test index.html for GitHub Pages.</p>
+<body class="home-page">
+<div class="top-nav">
+  <div class="top-nav-left">
+    <a class="top-nav-logo top-nav-logo-link" href="./" aria-label="Go to home page">
+      <img src="assets/caracal.svg" alt="Caracal Logo" class="top-nav-logo-image" />
+      <span class="top-nav-logo-text">Caracal</span>
+    </a>
+    <div class="top-nav-content">
+      <a href="./" class="top-nav-link active">Home</a>
+      <a href="docs/" class="top-nav-link">Docs</a>
+      <a href="blog/" class="top-nav-link">Blog</a>
+    </div>
+  </div>
+  <a class="top-nav-link github-link" href="https://github.com/arminherling/Caracal" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+    <img src="assets/github-logo.png" alt="GitHub" />
+    <span>Repo</span>
+  </a>
+  <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+    <span class="icon" id="themeIcon">&#9788;</span>
+    <span id="themeLabel">Light</span>
+  </button>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay"></div>
+<nav id="nav">
+  <ul>
+    <li><a href="./">Home</a></li>
+    <li><a href="docs/">Docs</a></li>
+    <li><a href="blog/">Blog</a></li>
+  </ul>
+</nav>
+<main class="home-main">
+  <div class="home-intro-row">
+    <div class="home-intro-copy">
+      <h1>Caracal</h1>
+      <p class="intro-subtitle">An imperative compiled language focused on clear syntax and sensible defaults.</p>
+      <p>
+        Designed for clear, enjoyable syntax with practical defaults. 
+        Caracal aims to feel lightweight to write while remaining statically typed through strong type inference.
+        The project is currently in active development, with the core syntax and semantics being fleshed out and implemented.
+        It uses LLVM for code generation, targeting native compilation.
+      </p>
+    </div>
+    <img src="assets/caracal.svg" alt="Caracal Logo" class="home-logo" />
+  </div>
+
+  <div class="example-picker">
+    <label for="exampleSelect">Examples:</label>
+    <select id="exampleSelect">
+      <option value="hello" selected>Hello World</option>
+      <option value="fibonacci">Fibonacci</option>
+      <option value="enum">Enum Usage</option>
+      <option value="trailing-if">Trailing If</option>
+    </select>
+  </div>
+
+  <pre><code class="language-caracal" id="homeExampleCode">def main()
+{
+    print("Hello, World!");
+}</code></pre>
+
+  <h2>Goals</h2>
+  <ul class="home-overview-list">
+    <li>Native compilation</li>
+    <li>Good sensible defaults</li>
+    <li>Powerful generics</li>
+    <li>Low barrier for tests</li>
+    <li>Maybe not too ugly syntax</li>
+  </ul>
+
+</main>
+<script src="highlight.js"></script>
+<script src="home-examples.js"></script>
+<script src="theme.js"></script>
 </body>
 </html>

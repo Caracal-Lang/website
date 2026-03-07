@@ -1,0 +1,10 @@
+[
+    {
+        "slug":  "devlog-1-hello-world",
+        "file":  "hello-world.md",
+        "url":  "https://caracal-lang.org/blog/devlog-1-hello-world/",
+        "title":  "Devlog #1 Hello World",
+        "date":  "2026-03-05",
+        "description":  "The first devlog for Caracal, covering goals, current progress, and next milestones."
+    }
+]

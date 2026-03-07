@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devlog #1 Hello World - Caracal Blog</title>
+        <meta name="description" content="The first devlog for Caracal, covering goals, current progress, and next milestones." />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Caracal" />
+    <meta property="og:title" content="Devlog #1 Hello World - Caracal Blog" />
+    <meta property="og:description" content="The first devlog for Caracal, covering goals, current progress, and next milestones." />
+    <meta property="og:url" content="https://caracal-lang.org/blog/devlog-1-hello-world/" />
+    <meta property="og:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+    <meta property="og:image:alt" content="Caracal social preview image" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Devlog #1 Hello World - Caracal Blog" />
+    <meta name="twitter:description" content="The first devlog for Caracal, covering goals, current progress, and next milestones." />
+    <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+    <link rel="canonical" href="https://caracal-lang.org/blog/devlog-1-hello-world/" />
+  <script src="../../preload-theme.js"></script>
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body class="post-page">
+<div class="top-nav">
+  <div class="top-nav-left">
+    <a class="top-nav-logo top-nav-logo-link" href="../../" aria-label="Go to home page">
+      <img src="../../assets/caracal.svg" alt="Caracal Logo" class="top-nav-logo-image" />
+      <span class="top-nav-logo-text">Caracal</span>
+    </a>
+    <div class="top-nav-content">
+    <a href="../../" class="top-nav-link">Home</a>
+    <a href="../../docs/" class="top-nav-link">Docs</a>
+    <a href="../../blog/" class="top-nav-link active">Blog</a>
+    </div>
+  </div>
+  <a class="top-nav-link github-link" href="https://github.com/arminherling/Caracal" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+    <img src="../../assets/github-logo.png" alt="GitHub" />
+    <span>Repo</span>
+  </a>
+  <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+    <span class="icon" id="themeIcon">&#9788;</span>
+    <span id="themeLabel">Light</span>
+  </button>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay"></div>
+<nav id="nav">
+  <ul>
+    <li class="mobile-only-link"><a href="../../">Home</a></li>
+    <li class="mobile-only-link"><a href="../../docs/">Docs</a></li>
+    <div class="section-title">Blog</div>
+    <li><a href="../../blog/">All Posts</a></li>
+        <div class="section-title">This Post</div>
+        <li id="postTocLoading"><span class="post-toc-empty">Loading headings...</span></li>
+        <li id="postToc"></li>
+  </ul>
+</nav>
+<main>
+    <p><a href="../../blog/">&larr; Back to blog</a></p>
+  <h1>Devlog #1 Hello World</h1>
+  <p class="post-meta"><time datetime="2026-03-05">2026-03-05</time></p>
+  <article class="blog-content">
+    <p>Welcome to the first Caracal devlog.</p>
+<pre><code class="language-cara">def main()
+{
+    print(&quot;Hello, World!&quot;);
+}</code></pre>
+<p>This post is the start of my online devlog about the Caracal compiler and tooling. My goal is to document what is working and where I&#39;m heading with the project.</p>
+<h2 id="why-this-project-exists"><a class="heading-anchor" href="#why-this-project-exists" aria-label="Link to section Why this project exists">Why this project exists</a> <a class="blog-anchor" href="#why-this-project-exists" aria-label="Copy link to section Why this project exists">#</a></h2>
+<p>Since every new language apparently needs to justify their existence, here is mine:</p>
+<p>Caracal exists because I&#39;m interested in language design and like to experiment with compilers and related tech. I&#39;m trying to create a language that I&#39;ll enjoy using. It would be cool if other people are gonna like and use the language too, but it&#39;s also fine if that doesn&#39;t happen.</p>
+<h2 id="status"><a class="heading-anchor" href="#status" aria-label="Link to section Status">Status</a> <a class="blog-anchor" href="#status" aria-label="Copy link to section Status">#</a></h2>
+<p>The basic language features are currently slowly getting worked out.</p>
+<p>Alot of the syntax is already getting parsed, whats mainly missing here is variant types and generics.</p>
+<p>A big chunk of that is already getting type checked and has working LLVM codegen, like functions, constants and variables. My tests currently only test the happy path of the compiler, the reason for that is because I can make some good progress on the language without getting bogged down. Another reason is that I don&#39;t have diagnostics yet and need to prepare tests for errors and warnings.</p>
+<p>There also isn&#39;t a standard library or a way to create projects yet.</p>
+<p>I created this site, as you can see, to document the language and keep a devlog that I can link to people.</p>
+<h2 id="what-is-next"><a class="heading-anchor" href="#what-is-next" aria-label="Link to section What is next">What is next</a> <a class="blog-anchor" href="#what-is-next" aria-label="Copy link to section What is next">#</a></h2>
+<p>I&#39;m currently working on getting types into the language, static methods work already tho. After that I&#39;m either working on variant types, multi-file support, or some of the generics. Maybe I&#39;ll work on diagnostics, they are a bit overdue.</p>
+<h2 id="future-devlogs"><a class="heading-anchor" href="#future-devlogs" aria-label="Link to section Future Devlogs">Future Devlogs</a> <a class="blog-anchor" href="#future-devlogs" aria-label="Copy link to section Future Devlogs">#</a></h2>
+<p>Future posts will probably gonna include what changed since the last post or what problems I was fighting with. I&#39;m probably also gonna outline the next short-term plans for the project.</p>
+<p>That should be it for the first post, more updates later.</p>
+<p>Armin</p>
+  </article>
+</main>
+<script src="../../highlight.js"></script>
+<script src="../../theme.js"></script>
+<script>
+    (function () {
+        const tocContainer = document.getElementById('postToc');
+        const loadingListItem = document.getElementById('postTocLoading');
+        if (!tocContainer) return;
+
+            const headingElements = document.querySelectorAll(
+            '.blog-content h2[id], .blog-content h3[id], .blog-content h4[id], .blog-content h5[id], .blog-content h6[id]'
+        );
+
+        if (!headingElements.length) {
+            if (loadingListItem) {
+                loadingListItem.innerHTML = '<span class="post-toc-empty">No headings in this post.</span>';
+            }
+            return;
+        }
+
+        if (loadingListItem) loadingListItem.remove();
+
+        const currentHash = window.location.hash;
+
+        headingElements.forEach((heading) => {
+            const level = Number(heading.tagName.slice(1));
+            const link = document.createElement('a');
+            link.className = 'post-toc-link post-toc-level-' + level;
+            link.href = '#' + heading.id;
+
+            const headingAnchor = heading.querySelector('.heading-anchor');
+            link.textContent = headingAnchor ? headingAnchor.textContent : heading.textContent.replace(/\s+#$/, '');
+
+            if (currentHash === '#' + heading.id) link.classList.add('active');
+
+            tocContainer.appendChild(link);
+        });
+    })();
+
+    if (window._rehighlight) {
+      window._rehighlight();
+    }
+</script>
+</body>
+</html>

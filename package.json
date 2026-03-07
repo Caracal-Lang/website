@@ -1,0 +1,16 @@
+{
+  "name": "caracal-website",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "prettier": "^2.8.8",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
+    "format": "prettier --write \"**/*.js\""
+  }
+}

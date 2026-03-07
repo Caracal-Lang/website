@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caracal - Docs</title>
+  <meta name="description" content="Read the Caracal language documentation, including syntax, types, control flow, and roadmap." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Caracal" />
+  <meta property="og:title" content="Caracal - Docs" />
+  <meta property="og:description" content="Read the Caracal language documentation, including syntax, types, control flow, and roadmap." />
+  <meta property="og:url" content="docs/" />
+  <meta property="og:image" content="assets/caracal-banner.png" />
+  <meta property="og:image:alt" content="Caracal social preview image" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Caracal - Docs" />
+  <meta name="twitter:description" content="Read the Caracal language documentation, including syntax, types, control flow, and roadmap." />
+  <meta name="twitter:image" content="assets/caracal-banner.png" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <script src="../preload-theme.js"></script>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="docs-page">
+<div class="top-nav">
+  <div class="top-nav-left">
+    <a class="top-nav-logo top-nav-logo-link" href="../" aria-label="Go to home page">
+      <img src="../assets/caracal.svg" alt="Caracal Logo" class="top-nav-logo-image" />
+      <span class="top-nav-logo-text">Caracal</span>
+    </a>
+    <div class="top-nav-content">
+      <a href="../" class="top-nav-link">Home</a>
+      <a href="../docs/" class="top-nav-link active">Docs</a>
+      <a href="../blog/" class="top-nav-link">Blog</a>
+    </div>
+  </div>
+  <a class="top-nav-link github-link" href="https://github.com/arminherling/Caracal" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+    <img src="../assets/github-logo.png" alt="GitHub" />
+    <span>Repo</span>
+  </a>
+  <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+    <span class="icon" id="themeIcon">&#9788;</span>
+    <span id="themeLabel">Light</span>
+  </button>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay"></div>
+<nav id="nav">
+  <ul>
+    <li class="mobile-only-link"><a href="../">Home</a></li>
+    <li class="mobile-only-link"><a href="../blog/">Blog</a></li>
+    <div class="section-title">Documentation</div>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#constants">Constants</a></li>
+    <li><a href="#variables">Variables</a></li>
+    <li><a href="#functions">Functions</a></li>
+    <li><a href="#enums">Enums</a></li>
+    <li><a href="#types">Types</a></li>
+    <li><a href="#variants">Variants</a></li>
+    <li><a href="#control-flow">Control Flow</a></li>
+    <li class="sub-item"><a href="#return">Return</a></li>
+    <li class="sub-item"><a href="#if">If</a></li>
+    <li class="sub-item"><a href="#while">While</a></li>
+    <li class="sub-item"><a href="#skip">Skip</a></li>
+    <li class="sub-item"><a href="#break">Break</a></li>
+    <li class="sub-item"><a href="#trailing-if">Trailing if</a></li>
+  </ul>
+</nav>
+<main>
+  <h1>Caracal Documentation</h1>
+  <p class="intro-subtitle">The Caracal language reference.</p>
+
+  <section id="description">
+    <h2>Description</h2>
+    <p>
+      Caracal is an imperative, compiled language with a focus on simple and enjoyable syntax.
+      It is designed to be statically typed while still feeling ergonomic through type inference.
+    </p>
+    <p class="tip"><strong>Note:</strong> Syntax and semantics are still work-in-progress and may change.</p>
+  </section>
+
+  <section id="roadmap">
+    <h2>Roadmap</h2>
+    <p>The current focus is on getting a minimal version up and running. For that, I'm generating LLVM IR.</p>
+    <ul>
+      <li>Lexer: mostly done</li>
+      <li>Parser: basic syntax available, advanced features in progress</li>
+      <li>Typechecker: partially implemented</li>
+      <li>Optimizer: not implemented yet</li>
+      <li>Codegen: LLVM is already generating some native binaries</li>
+    </ul>
+  </section>
+
+  <section id="constants">
+    <h2>Constants</h2>
+    <p>To declare constants in Caracal, we use similar syntax to parameters, except we use double colons <code>::</code>. They can't be changed during runtime as the name implies. Es can be declared in global scope or function scope. The type is infered during compilation, but you can use an explicit type.</p>
+    <pre><code class="language-caracal">// infered type of OS
+currentOS :: OS.Windows;
+
+// explicit type of i32
+year : i32 : 2026;</code></pre>
+  </section>
+
+  <section id="variables">
+    <h2>Variables</h2>
+    <p>Variables are similar to constants but they can be changed during runtime. We declare them with <code>:=</code>. Unlike constants, variables can't be declared in global scope. We can also state the type explicitly, same as constants.</p>
+    <pre><code class="language-caracal">def getRandomNumber() i32
+{
+    // chosen by fair dice roll.
+    // guaranteed to be random.
+    x := 4;
+    return x;
+}</code></pre>
+  </section>
+
+  <section id="functions">
+    <h2>Functions</h2>
+    <p>Functions use <code>def</code> keyword to declare functions. Parameters start with the name and then the type, they are immutable by default.</p>
+    <pre><code class="language-caracal">def square(x: i32)
+{
+    return x * x;
+}</code></pre>
+    <p>We can also declare external C functions with the <code>#extern</code> annotation. This form also supports C's variadic parameters with <code>...</code>. The code within the braces is ignored.</p>
+    <pre><code class="language-caracal">#extern()
+def puts(message: string) i32 {}
+
+#extern()
+def printf(message: string, ...) i32 {}</code></pre>
+  </section>
+
+  <section id="enums">
+    <h2>Enums</h2>
+    <p>Enums in Caracal are scoped constants with the same type, they work similar to C/C++.</p>
+    <pre><code class="language-caracal">enum Values
+{
+    First :: 1
+    Second :: 2
+    Third :: 3
+}
+
+s :: Values.Second;</code></pre>
+    <p>The <code>#step(n)</code> annotation allows creating C-like enums where each member increases by <code>n</code> unless a value is manually assigned. If no annotation is used, enums default to <code>step(1)</code>.</p>
+    <pre><code class="language-caracal">#step(10)
+enum BuildStage
+{
+    Lexer               // 0
+    Parser              // 10
+    Typechecker :: 50   // 50
+    Optimizer           // 60
+}</code></pre>
+    <p><code>#flag</code> creates bit-flag enums where each member is a power of two.</p>
+    <pre><code class="language-caracal">#flag
+enum Permission
+{
+    Read                // 1 (2^0)
+    Write               // 2 (2^1)
+    Execute             // 4 (2^2)
+}</code></pre>
+  </section>
+
+  <section id="types">
+    <h2>Types</h2>
+    <p>Types are the data objects of the language, they are similar to structs in other languages and can contain fields and methods. Members are accessed with a dot <code>.</code>, similar to <code>this.</code> in other languages.</p>
+    <pre><code class="language-caracal">type Two
+{
+    one :: 1
+    
+    def one() i32
+    {
+        return .one;
+    }
+
+    def value() i32
+    {
+        return .one() + .one();
+    }
+}</code></pre>
+  </section>
+
+  <section id="variants">
+    <h2>Variants</h2>
+    <p>Variants, also known as sum types or tagged unions, are Caracal's way to do polymorphism, they allow you to put different types behind a unified interface. They can be extended from multiple files.</p>
+    <p class="tip"><strong>Note:</strong> Syntax for variants isn't fully defined yet.</p>
+  </section>
+
+  <section id="control-flow">
+    <h2>Control Flow</h2>
+    
+    <h3>Return</h3>
+    <p>Return works like in other languages, you can either specify what you want to return or just have it on it's own for functions that return nothing.</p>
+    <pre><code class="language-caracal">def five() i32
+{
+    return 5;
+}
+
+def nothing()
+{
+    return;
+}</code></pre>
+
+    <h3>If</h3>
+    <p>If works like in other languages, except that the parenthesis around the condition aren't required. You can still add them if you want tho.</p>
+    <pre><code class="language-caracal">def func() i32
+{ 
+    // parenthesis around the condition are allowed but not required
+    if (false)  
+    {
+        return 1;
+    }
+    else if true
+    {
+        return 2;
+    }
+    else
+    {
+        return 3;
+    }
+}</code></pre>
+
+    <h3>While</h3>
+    <p>While also works like in other languages, it loops until the condition isn't true anymore.</p>
+    <pre><code class="language-caracal">def stuff()
+{
+    i := 0;
+    while i < 3
+    {
+        i = i + 1;
+    }
+}</code></pre>
+    
+    <h3>Skip</h3>
+    <p>Skip works like <code>continue</code> in other languages, it skips the rest of the loop body and restarts the loop.</p>
+    <pre><code class="language-caracal">def stuff()
+{
+    i := 0;
+    while i < 10
+    {
+        i = i + 1;
+        if i > 5 and i < 7
+        {
+            skip;
+        }
+    }
+}</code></pre>
+    
+    <h3>Break</h3>
+    <p>Break works like in other languages, it breaks out of the loop and continues after the loop body.</p>
+    <pre><code class="language-caracal">def stuff()
+{
+    i := 0;
+    while true
+    {
+        i = i + 1;
+        if i >= 10
+            break;
+    }
+}</code></pre>
+    
+    <h3>Trailing if</h3>
+    <p>Caracal supports trailing if for return, break and skip statements. It is just syntax sugar but makes the code a bit nicer to read.</p>
+    <pre><code class="language-caracal">break if x > 10;
+
+skip if i > 3;
+
+return 0 if true;</code></pre>
+    <p>vs</p>
+    <pre><code class="language-caracal">if x > 10
+  break;
+
+if i > 3
+  skip;
+
+if true
+  return 0;</code></pre>
+  </section>
+</main>
+<script src="../highlight.js"></script>
+<script src="../theme.js"></script>
+</body>
+</html>

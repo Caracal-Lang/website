@@ -1,0 +1,11 @@
+def fib(n: i32) i32
+{
+    return n if n <= 1;
+    return fib(n - 1) + fib(n - 2);
+}
+
+def main()
+{
+    result :: fib(8);
+    print(result);
+}

@@ -1,0 +1,26 @@
+// C-like enum: each member value increases by 10 from the previous one.
+// You can also manually set a member value.
+// If no enum annotation is provided, enums use step(1) by default.
+#step(10)
+enum BuildStage
+{
+    Lexer               // 0
+    Parser              // 10
+    Typechecker :: 50   // 50
+    Optimizer           // 60
+}
+
+// Bit-flag enum: each member is a bit flag.
+#flag
+enum Permission
+{
+    Read                // 1 (2^0)
+    Write               // 2 (2^1)
+    Execute             // 4 (2^2)
+}
+
+def main()
+{
+    stage :: BuildStage.Typechecker;
+    userPermission :: Permission.Write;
+}
