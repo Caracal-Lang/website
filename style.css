@@ -351,14 +351,31 @@ pre.diagram code { color: var(--text-muted); }
 }
 
 @media (max-width: 800px) {
-  .hamburger { 
-    display: flex;
+  /* slightly reduce brand text on mobile */
+  .top-nav-logo-text {
+    font-size: 1.6em;
   }
   
   .top-nav-content {
     display: none;
   }
-  
+
+  /* hide the text label inside the github link on mobile */
+  .github-link span {
+    display: none;
+  }
+  .theme-toggle {
+    width: 44px;
+    padding: 6px;
+  }
+  #themeLabel {
+    display: none;
+  }
+
+  .hamburger { 
+    display: flex;
+  }
+
   nav {
     top: var(--top-nav-height);
     left: 0;
