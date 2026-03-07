@@ -371,9 +371,13 @@ pre.diagram code { color: var(--text-muted); }
   #themeLabel {
     display: none;
   }
-
   .hamburger { 
     display: flex;
+  }
+
+  /* ensure page background remains blue on mobile like desktop */
+  body {
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
   }
 
   nav {
