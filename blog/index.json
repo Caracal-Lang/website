@@ -1,5 +1,13 @@
 [
     {
+        "slug":  "devlog-2-side-quest",
+        "file":  "progress-and-carareport.md",
+        "url":  "https://caracal-lang.org/blog/devlog-2-side-quest/",
+        "title":  "Devlog #2 Side quest",
+        "date":  "2026-03-17",
+        "description":  "Progress on Caracal and a weekend side quest."
+    },
+    {
         "slug":  "devlog-1-hello-world",
         "file":  "hello-world.md",
         "url":  "https://caracal-lang.org/blog/devlog-1-hello-world/",

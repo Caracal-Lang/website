@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devlog #2 Side quest - Caracal Blog</title>
+        <meta name="description" content="Progress on Caracal and a weekend side quest." />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Caracal" />
+    <meta property="og:title" content="Devlog #2 Side quest - Caracal Blog" />
+    <meta property="og:description" content="Progress on Caracal and a weekend side quest." />
+    <meta property="og:url" content="https://caracal-lang.org/blog/devlog-2-side-quest/" />
+    <meta property="og:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+    <meta property="og:image:alt" content="Caracal social preview image" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Devlog #2 Side quest - Caracal Blog" />
+    <meta name="twitter:description" content="Progress on Caracal and a weekend side quest." />
+    <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+    <link rel="canonical" href="https://caracal-lang.org/blog/devlog-2-side-quest/" />
+  <script src="../../preload-theme.js"></script>
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body class="post-page">
+<div class="top-nav">
+  <div class="top-nav-left">
+    <a class="top-nav-logo top-nav-logo-link" href="../../" aria-label="Go to home page">
+      <img src="../../assets/caracal.svg" alt="Caracal Logo" class="top-nav-logo-image" />
+      <span class="top-nav-logo-text">Caracal</span>
+    </a>
+    <div class="top-nav-content">
+    <a href="../../" class="top-nav-link">Home</a>
+    <a href="../../docs/" class="top-nav-link">Docs</a>
+    <a href="../../blog/" class="top-nav-link active">Blog</a>
+    </div>
+  </div>
+  <a class="top-nav-link github-link" href="https://github.com/arminherling/Caracal" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+    <img src="../../assets/github-logo.png" alt="GitHub" />
+    <span>Repo</span>
+  </a>
+  <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+    <span class="icon" id="themeIcon">&#9788;</span>
+    <span id="themeLabel">Light</span>
+  </button>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay"></div>
+<nav id="nav">
+  <ul>
+    <li class="mobile-only-link"><a href="../../">Home</a></li>
+    <li class="mobile-only-link"><a href="../../docs/">Docs</a></li>
+    <div class="section-title">Blog</div>
+    <li><a href="../../blog/">All Posts</a></li>
+        <div class="section-title">This Post</div>
+        <li id="postTocLoading"><span class="post-toc-empty">Loading headings...</span></li>
+        <li id="postToc"></li>
+  </ul>
+</nav>
+<main>
+    <p><a href="../../blog/">&larr; Back to blog</a></p>
+  <h1>Devlog #2 Side quest</h1>
+  <p class="post-meta"><time datetime="2026-03-17">2026-03-17</time></p>
+  <article class="blog-content">
+    <p>Quite a bit happened since the first devlog for Caracal, including some side quest.</p>
+<h2 id="references"><a class="heading-anchor" href="#references" aria-label="Link to section References">References</a> <a class="blog-anchor" href="#references" aria-label="Copy link to section References">#</a></h2>
+<p>I got references working after some fighting with LLVM and trying to figure out how it should work. They are a steping stone for methods since the type is passed as a hidden first parameter.</p>
+<h2 id="order-independent-declarations"><a class="heading-anchor" href="#order-independent-declarations" aria-label="Link to section Order independent declarations">Order independent declarations</a> <a class="blog-anchor" href="#order-independent-declarations" aria-label="Copy link to section Order independent declarations">#</a></h2>
+<p>After I got the codegen for references done, I went and changed the type checker and codegen to allow for order independent declarations. This means a function can call a functions thats not type checked yet. The way I do it is pretty obvious I think. I run a pass over the ParseTree and declare all functions and methods, and do the type checking after that. This might not be the best way to do it but it works for now.</p>
+<h2 id="multiple-file-support"><a class="heading-anchor" href="#multiple-file-support" aria-label="Link to section Multiple file support">Multiple file support</a> <a class="blog-anchor" href="#multiple-file-support" aria-label="Copy link to section Multiple file support">#</a></h2>
+<p>The previous changes allow me to support multiple files now, since I can just parse multiple files and then let the type checker do the first pass over all files.</p>
+<p>I could finally add the first file of the core library thanks to this. It currently only contains some extern functions like printf tho.</p>
+<h2 id="carareport"><a class="heading-anchor" href="#carareport" aria-label="Link to section CaraReport">CaraReport</a> <a class="blog-anchor" href="#carareport" aria-label="Copy link to section CaraReport">#</a></h2>
+<p>My next task was to get types working but I&#39;m struggling a big with the LLVM codegen right now.</p>
+<p>So I decided to do a little sidequest to create an error reporting library for C++ since I didnt find a good one before. There are quite a few popular ones in Rustland like <a href="https://github.com/brendanzab/codespan">codespan</a>, <a href="https://github.com/zesterer/ariadne">ariadne</a> and <a href="https://github.com/zkat/miette">miette</a>, but none for C++.</p>
+<p>My favorite one out of those 3 are the errors generated by miette so I went to yakshave my own version with some changes. The main drawing code is roughly 1k lines of code, way more than I wanted but it supports quite a few features.</p>
+<p>Overall i&#39;m pretty happy with the result, even if there are still bugs to fix.</p>
+<p><img src="../../assets/carareport.png" alt="CaraReport" /></p>
+<p>Link: <a href="https://github.com/Caracal-Lang/CaraReport">https://github.com/Caracal-Lang/CaraReport</a></p>
+<h2 id="whats-next"><a class="heading-anchor" href="#whats-next" aria-label="Link to section Whats next">Whats next</a> <a class="blog-anchor" href="#whats-next" aria-label="Copy link to section Whats next">#</a></h2>
+<p>I want to get types done next, the codegen should be close to working. What I also need to tests for the generated LLVM IR. I should also work on emitting errors, now that I got a nice error reporting lib.</p>
+<p>Armin</p>
+  </article>
+</main>
+<script src="../../highlight.js"></script>
+<script src="../../theme.js"></script>
+<script src="../postToc.js"></script>
+</body>
+</html>
