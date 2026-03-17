@@ -238,6 +238,15 @@ p  { margin-bottom: 14px; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-hover); text-decoration: underline; }
 
+/* Make links inside blog posts match header color in light mode */
+[data-theme="light"] .blog-content a {
+  color: var(--title-accent);
+}
+[data-theme="light"] .blog-content a:hover {
+  color: var(--title-accent);
+  text-decoration: underline;
+}
+
 :not(pre) > code {
   font-family: 'Cascadia Code','Fira Code','Consolas',monospace;
   font-variant-ligatures: none;
