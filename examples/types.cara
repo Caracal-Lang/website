@@ -8,7 +8,7 @@ type Vector2D(x: i32, y: i32)
     // methods are defined inside the type
     def lengthSquared() i32
     {
-        return (x * x) + (y * y);
+        return (.x * .x) + (.y * .y);
     }
 
     // static methods are defined with the type name
