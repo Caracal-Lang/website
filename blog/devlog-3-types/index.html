@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devlog #3 Types - Caracal Blog</title>
+    <meta name="description" content="Progress on types, order-independent checking, and the first external contribution." />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Caracal" />
+    <meta property="og:title" content="Devlog #3 Types - Caracal Blog" />
+    <meta property="og:description" content="Progress on types, order-independent checking, and the first external contribution." />
+    <meta property="og:url" content="https://caracal-lang.org/blog/devlog-3-types/" />
+    <meta property="og:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+    <meta property="og:image:alt" content="Caracal social preview image" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Devlog #3 Types - Caracal Blog" />
+    <meta name="twitter:description" content="Progress on types, order-independent checking, and the first external contribution." />
+    <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
+    <meta name="twitter:image:alt" content="Caracal social preview image" />
+    <link rel="canonical" href="https://caracal-lang.org/blog/devlog-3-types/" />
+  <script src="../../preload-theme.js"></script>
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body class="post-page">
+<div class="top-nav">
+  <div class="top-nav-left">
+    <a class="top-nav-logo top-nav-logo-link" href="../../" aria-label="Go to home page">
+      <img src="../../assets/caracal.svg" alt="Caracal Logo" class="top-nav-logo-image" />
+      <span class="top-nav-logo-text">Caracal</span>
+    </a>
+    <div class="top-nav-content">
+    <a href="../../" class="top-nav-link">Home</a>
+    <a href="../../docs/" class="top-nav-link">Docs</a>
+    <a href="../../blog/" class="top-nav-link active">Blog</a>
+    </div>
+  </div>
+  <a class="top-nav-link github-link" href="https://github.com/arminherling/Caracal" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">
+    <img src="../../assets/github-logo.png" alt="GitHub" />
+    <span>Repo</span>
+  </a>
+  <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+    <span class="icon" id="themeIcon">&#9788;</span>
+    <span id="themeLabel">Light</span>
+  </button>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+<div class="nav-overlay" id="navOverlay"></div>
+<nav id="nav">
+  <ul>
+    <li class="mobile-only-link"><a href="../../">Home</a></li>
+    <li class="mobile-only-link"><a href="../../docs/">Docs</a></li>
+    <div class="section-title">Blog</div>
+    <li><a href="../../blog/">All Posts</a></li>
+        <div class="section-title">This Post</div>
+        <li id="postTocLoading"><span class="post-toc-empty">Loading headings...</span></li>
+        <li id="postToc"></li>
+  </ul>
+</nav>
+<main>
+    <p><a href="../../blog/">&larr; Back to blog</a></p>
+  <h1>Devlog #3 Types</h1>
+  <p class="post-meta"><time datetime="2026-05-03">2026-05-03</time></p>
+  <article class="blog-content">
+    <p>It has been a few weeks since the last devlog. I took a break for like 2 weeks around Easter holidays to relax and enjoy the time off. Since then, I have been making some progress on the compiler.</p>
+<h2 id="progress-on-types"><a class="heading-anchor" href="#progress-on-types" aria-label="Link to section Progress on Types">Progress on Types</a> <a class="blog-anchor" href="#progress-on-types" aria-label="Copy link to section Progress on Types">#</a></h2>
+<p>The first thing I worked on after my break was codegen for type constructors. It took a bit to click on how they should work. The LLVM codegen generates a hidden this pointer as the first parameter for constructors so that I can decouple the memory allocation from the initialization.</p>
+<p>The constructor for a type with one field for example would look like this:</p>
+<pre><code class="language-llvm">%Number = type { i32 }
+
+define void @Number.new(ptr nonnull %this, i32 %para) {
+entry:
+  %value = getelementptr inbounds nuw %Number, ptr %this, i32 0, i32 0
+  store i32 %para, ptr %value, align 4
+  ret void
+}</code></pre>
+<p>The GetElementPtr instruction loads a pointer to the field and the Store instruction sets the data from the constructor parameter.</p>
+<p>The next task after this was methods and field access, which also works now. After that, I enabled the LLVM Test project and worked on getting more and more tests passing.</p>
+<h2 id="bugfixes"><a class="heading-anchor" href="#bugfixes" aria-label="Link to section Bugfixes">Bugfixes</a> <a class="blog-anchor" href="#bugfixes" aria-label="Copy link to section Bugfixes">#</a></h2>
+<p>I noticed that the order independent declaration still didn&#39;t work as expected, so I had to make some changes to the type checker. It now collects all names first and then works through the function and method bodies. This seems to work great so far.</p>
+<p>I also had to fix some parsing bugs for member access, the following code wasn&#39;t passing the parser test yet:</p>
+<pre><code class="language-cara">type Number(value: i32)
+{
+    value := value
+
+    def clamp()
+    {
+        if .value &lt; 0
+            .value = 0;
+    }
+}</code></pre>
+<p>Currently all of the 208 parser and 208 type checker tests are passing now, which is really nice!</p>
+<p>The LLVM tests are at 183/208 passing and 25/208 skipping.</p>
+<h2 id="first-contributor"><a class="heading-anchor" href="#first-contributor" aria-label="Link to section First contributor">First contributor</a> <a class="blog-anchor" href="#first-contributor" aria-label="Copy link to section First contributor">#</a></h2>
+<p>Shoutout to Caracal&#39;s first contributor <a href="https://github.com/Gipson62">Gipson62</a>, check out his language Atlas77 at: <a href="https://github.com/atlas77-lang/atlas77">https://github.com/atlas77-lang/atlas77</a></p>
+<h2 id="what-is-next"><a class="heading-anchor" href="#what-is-next" aria-label="Link to section What is next">What is next</a> <a class="blog-anchor" href="#what-is-next" aria-label="Copy link to section What is next">#</a></h2>
+<p>Next I&#39;m working on finally using <a href="https://github.com/Caracal-Lang/CaraReport">CaraReport</a> for compiler diagnostics. Getting codegen further along was more important to me than integrating the library, so I integrate it yet.</p>
+<p>Another task that I&#39;m gonna work on next, probably after compiler diagnostics, is to split up the current codegen into lowering to an IR layer and from there do the codegen. This should make working on the compiler a bit easier and allow me to add optimizations in the future.</p>
+<p>Armin</p>
+  </article>
+</main>
+<script src="../../highlight.js"></script>
+<script src="../../theme.js"></script>
+<script src="../postToc.js"></script>
+</body>
+</html>

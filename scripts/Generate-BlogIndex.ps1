@@ -93,6 +93,24 @@ function Escape-Html {
     return [System.Net.WebUtility]::HtmlEncode($Text)
 }
 
+function Resolve-SocialImageUrl {
+    param(
+        [string]$ImagePath
+    )
+
+    if ([string]::IsNullOrWhiteSpace($ImagePath)) {
+        return "$baseUrl/assets/caracal-banner.png"
+    }
+
+    $trimmed = $ImagePath.Trim()
+
+    if ($trimmed -match '^https?://') {
+        return $trimmed
+    }
+
+    return "$baseUrl/$($trimmed.TrimStart('/'))"
+}
+
 function Convert-InlineMarkdown {
     param(
         [string]$Text
@@ -283,6 +301,8 @@ function New-PostHtmlPage {
     $bodyHtml = Convert-MarkdownToHtml $Post.content
     $pageTitle = "$titleEscaped - Caracal Blog"
     $postDescription = Escape-Html ($Post.description)
+    $socialImageUrl = Escape-Html (Resolve-SocialImageUrl -ImagePath $Post.image)
+    $socialImageAlt = Escape-Html $(if ([string]::IsNullOrWhiteSpace($Post.image_alt)) { "Caracal social preview image" } else { $Post.image_alt })
 
     $html = @"
 <!DOCTYPE html>
@@ -291,20 +311,21 @@ function New-PostHtmlPage {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>$pageTitle</title>
-        <meta name="description" content="$postDescription" />
+    <meta name="description" content="$postDescription" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Caracal" />
     <meta property="og:title" content="$pageTitle" />
     <meta property="og:description" content="$postDescription" />
     <meta property="og:url" content="$baseUrl/blog/$($Post.slug)/" />
-    <meta property="og:image" content="$baseUrl/assets/caracal-banner.png" />
-    <meta property="og:image:alt" content="Caracal social preview image" />
+    <meta property="og:image" content="$socialImageUrl" />
+    <meta property="og:image:alt" content="$socialImageAlt" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="$pageTitle" />
     <meta name="twitter:description" content="$postDescription" />
-    <meta name="twitter:image" content="$baseUrl/assets/caracal-banner.png" />
+    <meta name="twitter:image" content="$socialImageUrl" />
+    <meta name="twitter:image:alt" content="$socialImageAlt" />
     <link rel="canonical" href="$baseUrl/blog/$($Post.slug)/" />
   <script src="../../preload-theme.js"></script>
   <link rel="stylesheet" href="../../style.css" />
@@ -439,6 +460,8 @@ function New-BlogArtifacts {
             title = $title
             date = $date
             description = $description
+            image = $parsed.Meta["image"]
+            image_alt = $parsed.Meta["image_alt"]
             content = $parsed.Content
         }
     }

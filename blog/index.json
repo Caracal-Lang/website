@@ -1,7 +1,15 @@
 [
     {
+        "slug":  "devlog-3-types",
+        "file":  "2026-05-03-devlog-3.md",
+        "url":  "https://caracal-lang.org/blog/devlog-3-types/",
+        "title":  "Devlog #3 Types",
+        "date":  "2026-05-03",
+        "description":  "Progress on types, order-independent checking, and the first external contribution."
+    },
+    {
         "slug":  "devlog-2-side-quest",
-        "file":  "progress-and-carareport.md",
+        "file":  "2026-03-17-progress-and-carareport.md",
         "url":  "https://caracal-lang.org/blog/devlog-2-side-quest/",
         "title":  "Devlog #2 Side quest",
         "date":  "2026-03-17",
@@ -9,7 +17,7 @@
     },
     {
         "slug":  "devlog-1-hello-world",
-        "file":  "hello-world.md",
+        "file":  "2026-03-05-hello-world.md",
         "url":  "https://caracal-lang.org/blog/devlog-1-hello-world/",
         "title":  "Devlog #1 Hello World",
         "date":  "2026-03-05",
