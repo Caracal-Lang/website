@@ -4,6 +4,7 @@
     fibonacci: 'examples/fibonacci.cara',
     enum: 'examples/enum-usage.cara',
     'trailing-if': 'examples/trailing-if.cara',
+    types: 'examples/types.cara',
   };
 
   const exampleSelectEl = document.getElementById('exampleSelect');
