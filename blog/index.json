@@ -5,7 +5,7 @@
         "url":  "https://caracal-lang.org/blog/devlog-3-types/",
         "title":  "Devlog #3 Types",
         "date":  "2026-05-03",
-        "description":  "Progress on types, order-independent checking, and the first external contribution."
+        "description":  "Progress on types, fixing order-independent declarations and whats next."
     },
     {
         "slug":  "devlog-2-side-quest",
