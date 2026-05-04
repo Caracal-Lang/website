@@ -297,6 +297,91 @@ th { background: var(--table-head); color: var(--heading); font-weight: 600; }
 .file-grid { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 24px; }
 .intro-subtitle { color: var(--text-muted); font-size: 1.1em; margin-bottom: 28px; }
 
+.page-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.page-title-row h1 {
+  margin-bottom: 0;
+}
+
+.blog-page .page-title-row .rss-link,
+.blog-page .page-title-row .rss-link:visited,
+.blog-page .page-title-row .rss-link:hover,
+.blog-page .page-title-row .rss-link:focus {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--title-accent);
+}
+
+.blog-page .page-title-row .rss-link:hover,
+.blog-page .page-title-row .rss-link:focus {
+  text-decoration: underline;
+}
+
+.blog-page .page-title-row .rss-link img {
+  width: 28px;
+  height: 28px;
+}
+
+.rss-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 0.9em;
+  font-weight: 600;
+  white-space: nowrap;
+  vertical-align: middle;
+  transition: border-color .15s, background .25s, color .15s;
+}
+
+.rss-link:hover {
+  border-color: var(--accent);
+  background: var(--tip-bg);
+  color: var(--accent-hover);
+  text-decoration: none;
+}
+
+.rss-link img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.rss-sidebar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px;
+  color: var(--title-accent);
+  font-size: 0.9em;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rss-sidebar-link:hover {
+  color: var(--title-accent);
+  background: transparent;
+  text-decoration: underline;
+}
+
+.rss-sidebar-link img {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .tip {
   border-left: 3px solid var(--green); background: var(--tip-bg);
   padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0 24px; font-size: 0.92em;
@@ -746,6 +831,10 @@ pre.diagram code { color: var(--text-muted); }
 
   .home-intro-row {
     flex-direction: column;
+  }
+
+  .rss-link {
+    margin-top: 0;
   }
 
   .home-logo {

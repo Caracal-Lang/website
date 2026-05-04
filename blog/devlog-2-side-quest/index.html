@@ -20,6 +20,7 @@
     <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
     <meta name="twitter:image:alt" content="Caracal social preview image" />
     <link rel="canonical" href="https://caracal-lang.org/blog/devlog-2-side-quest/" />
+    <link rel="alternate" type="application/rss+xml" title="Caracal Blog RSS" href="https://caracal-lang.org/blog/feed.xml" />
   <script src="../../preload-theme.js"></script>
   <link rel="stylesheet" href="../../style.css" />
 </head>
@@ -55,6 +56,7 @@
   <ul>
     <li class="mobile-only-link"><a href="../../">Home</a></li>
     <li class="mobile-only-link"><a href="../../docs/">Docs</a></li>
+    <li><a class="rss-sidebar-link" href="../../blog/feed.xml"><img src="../../assets/rss-icon.svg" alt="" aria-hidden="true" /> <span>RSS Feed</span></a></li>
     <div class="section-title">Blog</div>
     <li><a href="../../blog/">All Posts</a></li>
         <div class="section-title">This Post</div>
@@ -63,11 +65,11 @@
   </ul>
 </nav>
 <main>
-    <p><a href="../../blog/">&larr; Back to blog</a></p>
+  <p><a href="../../blog/">&larr; Back to blog</a></p>
   <h1>Devlog #2 Side quest</h1>
   <p class="post-meta"><time datetime="2026-03-17">2026-03-17</time></p>
   <article class="blog-content">
-    <p>I made some nice progress since the first devlog for Caracal, and went on a side quest during the weekend.</p>
+  <p>I made some nice progress since the first devlog for Caracal, and went on a side quest during the weekend.</p>
 <h2 id="references"><a class="heading-anchor" href="#references" aria-label="Link to section References">References</a> <a class="blog-anchor" href="#references" aria-label="Copy link to section References">#</a></h2>
 <p>I got codegen for references working after some fighting with LLVM. They are also a steping stone to get methods working for type, since a hidden reference to the object is passed as first parameter for methods.</p>
 <pre><code class="language-cara">def doubler(x: ref i32) 

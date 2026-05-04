@@ -19,6 +19,7 @@
     <meta name="twitter:description" content="Development notes and updates from the Caracal project." />
     <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
     <link rel="canonical" href="https://caracal-lang.org/blog/" />
+    <link rel="alternate" type="application/rss+xml" title="Caracal Blog RSS" href="https://caracal-lang.org/blog/feed.xml" />
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
     <script src="../preload-theme.js"></script>
     <link rel="stylesheet" href="../style.css" />
@@ -55,13 +56,17 @@
     <ul>
         <li class="mobile-only-link"><a href="../">Home</a></li>
         <li class="mobile-only-link"><a href="../docs/">Docs</a></li>
+        <li><a class="rss-sidebar-link" href="./feed.xml"><img src="../assets/rss-icon.svg" alt="" aria-hidden="true" /> <span>RSS Feed</span></a></li>
         <div class="section-title">Posts</div>
         <li id="blogPostNavLoading"><span class="post-toc-empty">Loading posts...</span></li>
         <li id="blogPostNav"></li>
     </ul>
 </nav>
 <main class="blog-main">
-    <h1>Caracal Blog</h1>
+    <div class="page-title-row">
+        <h1>Caracal Blog</h1>
+        <a class="rss-link" href="./feed.xml" aria-label="RSS Feed" title="RSS Feed"><img src="../assets/rss-icon.svg" alt="" aria-hidden="true" /></a>
+    </div>
     <p class="intro-subtitle">Devlogs, notes and other stuff.</p>
     <section id="blogList" class="blog-list">
         <p>Loading posts...</p>

@@ -20,6 +20,7 @@
     <meta name="twitter:image" content="https://caracal-lang.org/assets/caracal-banner.png" />
     <meta name="twitter:image:alt" content="Caracal social preview image" />
     <link rel="canonical" href="https://caracal-lang.org/blog/devlog-3-types/" />
+    <link rel="alternate" type="application/rss+xml" title="Caracal Blog RSS" href="https://caracal-lang.org/blog/feed.xml" />
   <script src="../../preload-theme.js"></script>
   <link rel="stylesheet" href="../../style.css" />
 </head>
@@ -55,6 +56,7 @@
   <ul>
     <li class="mobile-only-link"><a href="../../">Home</a></li>
     <li class="mobile-only-link"><a href="../../docs/">Docs</a></li>
+    <li><a class="rss-sidebar-link" href="../../blog/feed.xml"><img src="../../assets/rss-icon.svg" alt="" aria-hidden="true" /> <span>RSS Feed</span></a></li>
     <div class="section-title">Blog</div>
     <li><a href="../../blog/">All Posts</a></li>
         <div class="section-title">This Post</div>
@@ -63,11 +65,11 @@
   </ul>
 </nav>
 <main>
-    <p><a href="../../blog/">&larr; Back to blog</a></p>
+  <p><a href="../../blog/">&larr; Back to blog</a></p>
   <h1>Devlog #3 Types</h1>
   <p class="post-meta"><time datetime="2026-05-03">2026-05-03</time></p>
   <article class="blog-content">
-    <p>It has been a few weeks since the last devlog. I took a break for like 2 weeks around Easter holidays to relax and enjoy the time off. Since then, I have been making some progress on the compiler.</p>
+  <p>It has been a few weeks since the last devlog. I took a break for like 2 weeks around Easter holidays to relax and enjoy the time off. Since then, I have been making some progress on the compiler.</p>
 <h2 id="progress-on-types"><a class="heading-anchor" href="#progress-on-types" aria-label="Link to section Progress on Types">Progress on Types</a> <a class="blog-anchor" href="#progress-on-types" aria-label="Copy link to section Progress on Types">#</a></h2>
 <p>The first thing I worked on after my break was codegen for type constructors. It took a bit to click on how they should work. The LLVM codegen generates a hidden this pointer as the first parameter for constructors so that I can decouple the memory allocation from the initialization.</p>
 <p>The constructor for a type with one field for example would look like this:</p>

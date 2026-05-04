@@ -11,9 +11,11 @@ $projectRoot = Split-Path -Parent $scriptRoot
 $postsDir = Join-Path $projectRoot "posts"
 $blogDir = Join-Path $projectRoot "blog"
 $indexPath = Join-Path $blogDir "index.json"
+$feedPath = Join-Path $blogDir "feed.xml"
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
 $baseUrl = 'https://caracal-lang.org'
+$blogFeedUrl = "$baseUrl/blog/feed.xml"
 
 function Get-FrontMatter {
     param(
@@ -91,6 +93,54 @@ function Escape-Html {
     }
 
     return [System.Net.WebUtility]::HtmlEncode($Text)
+}
+
+function Escape-Xml {
+    param(
+        [string]$Text
+    )
+
+    if ($null -eq $Text) {
+        return ""
+    }
+
+    return [System.Security.SecurityElement]::Escape($Text)
+}
+
+function ConvertTo-RssDate {
+    param(
+        [string]$DateText
+    )
+
+    if ([string]::IsNullOrWhiteSpace($DateText)) {
+        return [DateTimeOffset]::UtcNow.ToString("r", [System.Globalization.CultureInfo]::InvariantCulture)
+    }
+
+    $styles = [System.Globalization.DateTimeStyles]::AllowWhiteSpaces
+    $culture = [System.Globalization.CultureInfo]::InvariantCulture
+    $trimmedDate = $DateText.Trim()
+
+    try {
+        $dateValue = [DateTime]::ParseExact($trimmedDate, "yyyy-MM-dd", $culture, $styles)
+        $rssDate = [DateTimeOffset]::new($dateValue.Year, $dateValue.Month, $dateValue.Day, 0, 0, 0, [TimeSpan]::Zero)
+        return $rssDate.ToString("r", $culture)
+    } catch {
+    }
+
+    try {
+        $dateTimeOffset = [DateTimeOffset]::Parse($trimmedDate, $culture, $styles)
+        return $dateTimeOffset.ToUniversalTime().ToString("r", $culture)
+    } catch {
+    }
+
+    try {
+        $dateValue = [DateTime]::Parse($trimmedDate, $culture, $styles)
+        $rssDate = [DateTimeOffset]::new($dateValue.ToUniversalTime())
+        return $rssDate.ToString("r", $culture)
+    } catch {
+    }
+
+    return [DateTimeOffset]::UtcNow.ToString("r", $culture)
 }
 
 function Resolve-SocialImageUrl {
@@ -327,6 +377,7 @@ function New-PostHtmlPage {
     <meta name="twitter:image" content="$socialImageUrl" />
     <meta name="twitter:image:alt" content="$socialImageAlt" />
     <link rel="canonical" href="$baseUrl/blog/$($Post.slug)/" />
+    <link rel="alternate" type="application/rss+xml" title="Caracal Blog RSS" href="$blogFeedUrl" />
   <script src="../../preload-theme.js"></script>
   <link rel="stylesheet" href="../../style.css" />
 </head>
@@ -362,6 +413,7 @@ function New-PostHtmlPage {
   <ul>
     <li class="mobile-only-link"><a href="../../">Home</a></li>
     <li class="mobile-only-link"><a href="../../docs/">Docs</a></li>
+    <li><a class="rss-sidebar-link" href="../../blog/feed.xml"><img src="../../assets/rss-icon.svg" alt="" aria-hidden="true" /> <span>RSS Feed</span></a></li>
     <div class="section-title">Blog</div>
     <li><a href="../../blog/">All Posts</a></li>
         <div class="section-title">This Post</div>
@@ -370,11 +422,11 @@ function New-PostHtmlPage {
   </ul>
 </nav>
 <main>
-    <p><a href="../../blog/">&larr; Back to blog</a></p>
+  <p><a href="../../blog/">&larr; Back to blog</a></p>
   <h1>$titleEscaped</h1>
   <p class="post-meta"><time datetime="$dateEscaped">$dateEscaped</time></p>
   <article class="blog-content">
-    $bodyHtml
+  $bodyHtml
   </article>
 </main>
 <script src="../../highlight.js"></script>
@@ -391,6 +443,53 @@ function New-PostHtmlPage {
 
     $outputPath = Join-Path $postDir "index.html"
     [System.IO.File]::WriteAllText($outputPath, $html, $utf8NoBom)
+}
+
+function New-RssFeed {
+        param(
+                [PSCustomObject[]]$Posts
+        )
+
+        $channelTitle = Escape-Xml "Caracal Blog"
+        $channelLink = Escape-Xml "$baseUrl/blog/"
+        $channelDescription = Escape-Xml "Development notes and updates from the Caracal project."
+        $lastBuildDate = [DateTimeOffset]::UtcNow.ToString("r", [System.Globalization.CultureInfo]::InvariantCulture)
+
+        $items = foreach ($post in $Posts) {
+                $postUrl = "$baseUrl/blog/$($post.slug)/"
+                $itemTitle = Escape-Xml $post.title
+                $itemLink = Escape-Xml $postUrl
+                $itemGuid = Escape-Xml $postUrl
+                $itemDate = ConvertTo-RssDate -DateText $post.date
+                $itemDescription = Escape-Xml $post.description
+
+@"
+        <item>
+            <title>$itemTitle</title>
+            <link>$itemLink</link>
+            <guid>$itemGuid</guid>
+            <pubDate>$itemDate</pubDate>
+            <description>$itemDescription</description>
+        </item>
+"@
+        }
+
+        $rss = @"
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>$channelTitle</title>
+        <link>$channelLink</link>
+        <description>$channelDescription</description>
+        <language>en-us</language>
+        <lastBuildDate>$lastBuildDate</lastBuildDate>
+        <atom:link href="$blogFeedUrl" rel="self" type="application/rss+xml" />
+$($items -join "`n")
+    </channel>
+</rss>
+"@
+
+        [System.IO.File]::WriteAllText($feedPath, $rss, $utf8NoBom)
 }
 
 function New-BlogArtifacts {
@@ -485,9 +584,10 @@ function New-BlogArtifacts {
 
     $json = ConvertTo-Json -InputObject $indexEntries -Depth 4
     [System.IO.File]::WriteAllText($indexPath, $json, $utf8NoBom)
+    New-RssFeed -Posts $sortedEntries
 
     $timestamp = (Get-Date).ToString("HH:mm:ss")
-    Write-Host "Updated $indexPath and generated $($sortedEntries.Count) post pages at $timestamp"
+    Write-Host "Updated $indexPath, $feedPath and generated $($sortedEntries.Count) post pages at $timestamp"
 }
 
 New-BlogArtifacts
