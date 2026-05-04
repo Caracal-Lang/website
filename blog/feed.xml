@@ -5,7 +5,7 @@
         <link>https://caracal-lang.org/blog/</link>
         <description>Development notes and updates from the Caracal project.</description>
         <language>en-us</language>
-        <lastBuildDate>Mon, 04 May 2026 10:34:39 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 04 May 2026 12:58:35 GMT</lastBuildDate>
         <atom:link href="https://caracal-lang.org/blog/feed.xml" rel="self" type="application/rss+xml" />
         <item>
             <title>Devlog #3 Types</title>

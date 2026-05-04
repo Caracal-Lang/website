@@ -378,6 +378,7 @@ function New-PostHtmlPage {
     <meta name="twitter:image:alt" content="$socialImageAlt" />
     <link rel="canonical" href="$baseUrl/blog/$($Post.slug)/" />
     <link rel="alternate" type="application/rss+xml" title="Caracal Blog RSS" href="$blogFeedUrl" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
   <script src="../../preload-theme.js"></script>
   <link rel="stylesheet" href="../../style.css" />
 </head>
